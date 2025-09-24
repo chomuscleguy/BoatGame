@@ -7,7 +7,7 @@ public class OtherBoat : MonoBehaviour
 
     void Start()
     {
-        GameObject player = GameObject.FindWithTag("Player");
+        GameObject player = GameManager.instance.Player;
 
         int rand = Random.Range(0, 10);
 
@@ -33,7 +33,7 @@ public class OtherBoat : MonoBehaviour
         {
             if(other.attachedRigidbody.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
-                Time.timeScale = 0;
+                UIManager.instance.life.text = $"Life : {GameManager.instance.DecreaseLife()}";
             }
         }
 

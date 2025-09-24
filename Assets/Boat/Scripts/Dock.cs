@@ -22,7 +22,6 @@ public class Dock : MonoBehaviour
             curTime = 0;
             int index = Random.Range(0, spawnPoint.Length);
 
-            // 만약 이전에 만든 위치라면 다른 위치로 정하고싶다.
             if (index == prevIdex)
             {
                 index++;

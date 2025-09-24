@@ -3,30 +3,26 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance;
+
     public TextMeshProUGUI point;
     public TextMeshProUGUI time;
     public TextMeshProUGUI life;
+    public TextMeshProUGUI endPoint;
+    public TextMeshProUGUI endTime;
+    public GameObject GameOverUI;
 
-    private float min;
-    private float sec;
+    private void Awake()
+    {
+        UIManager.instance = this;
+    }
+
     private void Start()
     {
-        min = 0;
-        sec = 0;
+
+        GameOverUI.SetActive(false);
     }
 
-    private void Update()
-    {
-        int score = GameManager.instance.Score;
-        point.text = $"Point : {score:000}";
-        sec += Time.deltaTime;
-        if(sec>=60)
-        {
-            sec %= 60;
-            min++;
-        }
-
-        time.text = $"{min:00}:{sec:00}";
-    }
+    
 
 }

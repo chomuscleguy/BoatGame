@@ -4,6 +4,7 @@ public class ChangeView : MonoBehaviour
 {
     public Camera[] Cam;
     public GameObject minimap;
+    public GameObject handle;
 
     private int currentCamIndex = 0;
 
@@ -26,10 +27,5 @@ public class ChangeView : MonoBehaviour
     {
         for (int i = 0; i < Cam.Length; i++)
             Cam[i].gameObject.SetActive(i == index);
-
-        if (index == 1)
-            minimap.SetActive(true);
-        else
-            minimap.SetActive(false);
     }
 }

@@ -1,6 +1,5 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static UnityEngine.ParticleSystem;
 
 public class Move : MonoBehaviour
 {
@@ -11,6 +10,12 @@ public class Move : MonoBehaviour
     public float speed = 5;
     public float angle = 180;
     private ParticleSystem spray;
+    public GameObject tail;
+    public RectTransform handle;
+    public Animation anim;
+
+    public List<GameObject> tailList;
+
 
     private Vector3 velocity;
 
@@ -18,6 +23,7 @@ public class Move : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         spray = GetComponentInChildren<ParticleSystem>();
+        tailList = new List<GameObject>();
     }
 
     void Start()
@@ -34,6 +40,10 @@ public class Move : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
         Vector3 dir = transform.forward * v;
+
+        Vector3 handleAngles =  handle.localEulerAngles;
+        handleAngles.z += h; 
+        handle.localEulerAngles = handleAngles;
 
         if (dir.magnitude > 1)
             dir = dir.normalized;
@@ -68,8 +78,23 @@ public class Move : MonoBehaviour
             }
         }
 
-        
+
     }
 
+    GameObject lastTail;
 
+    public void InstancePoint()
+    {
+        if (lastTail == null)
+            lastTail = transform.GetChild(0).gameObject;
+
+        GameObject obj = Instantiate(tail, lastTail.transform.position, Quaternion.identity);
+
+        int speed = Mathf.Max(1, 10 - GameManager.instance.cnt);
+
+        obj.GetComponent<Tail>().SetInfo(lastTail, speed);
+
+        lastTail = obj;
+        tailList.Add(obj);
+    }
 }
